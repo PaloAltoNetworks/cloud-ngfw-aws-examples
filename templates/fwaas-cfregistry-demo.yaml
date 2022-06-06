@@ -1,0 +1,353 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Example CloudNGFW create RuleStack and NGFW resource 
+Parameters:
+  RSProgrammaticAccessToken:
+    NoEcho: true
+    Description: RuleStack ProgrammaticAccessToken
+    Type: String
+    Default: 
+  FWProgrammaticAccessToken:
+    NoEcho: true
+    Description: Firewall ProgrammaticAccessToken
+    Type: String
+    Default: 
+Resources:
+  RuleStackResource1:
+    Type: 'PaloAltoNetworks::CloudNGFW::RuleStack'
+    Properties:
+      RuleStackName: NGFWRuleStack1
+      ProgrammaticAccessToken: !Ref RSProgrammaticAccessToken
+      RuleStack:
+        Scope: Local
+        MinAppIdVersion: 8509-7158
+        Description:  RuleStack1 description 
+        Deploy: 'YES'
+      SecurityObjects:
+        FqdnList:
+          Name: FQDN-name
+          FqdnList:
+            - 30.1.1.0
+            - 30.1.2.0
+          AuditComment: Example audit commment
+          Description: Example FQDN description 1
+        PrefixList:
+          Name: prefix-name
+          PrefixList:
+            - 30.1.1.0/24
+            - 30.1.2.0/24
+          AuditComment:  audit commment
+          Description: Example Prefix description 1
+        CustomUrlCategory:
+          URLTargets:
+            - www.test.com
+            - www.test1.com
+            - www.test2.com
+          Name: Urlcateory
+          Description: Example CustomUrlCategory description 1
+          Action: allow
+          AuditComment: Example audit commment
+        CertificateObject:
+          Name: Example-certificate-object
+          Description: Certificate Object description 1
+          CertificateSignerArn: arnExampleSignarn
+          CertificateSelfSigned: false
+          AuditComment: Example certificate audit comment
+        IntelligentFeed:
+          Name: Example-IntelligentFeed
+          Description: Example Intelligent feed Desc 1
+          FeedURL: 'https://www.test123.com'
+          Type: URL_LIST
+          Frequency: DAILY
+          Time: 3
+          AuditComment: Example audit commment
+      RuleList:
+        - RuleListType: LocalRule
+          RuleName: ExampleRule1
+          Description: Example Security Rule 11 description update
+          Action: DenyResetServer
+          Protocol: application-default
+          Priority: 5
+          Source:
+            Cidrs:
+              - 192.168.1.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-TorExitIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+          Destination:
+            Cidrs:
+              - 192.168.2.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-BulletproofIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+              - PaloAltoNetworks-TorExitIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+            FqdnLists:
+              - Example-FQDN-name
+          Category:
+            URLCategoryNames:
+              - ExampleUrlcateory
+            Feeds:
+              - Example-IntelligentFeed
+          Applications:
+            - any
+        - RuleListType: LocalRule
+          RuleName: ExampleRule2
+          Description: Example Security Rule 12 description update
+          Action: DenyResetServer
+          Protocol: application-default
+          Priority: 9
+          Source:
+            Cidrs:
+              - 192.168.1.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-TorExitIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+          Destination:
+            Cidrs:
+              - 192.168.2.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-BulletproofIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+              - PaloAltoNetworks-TorExitIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+            FqdnLists:
+              - Example-FQDN-name
+          Category:
+            URLCategoryNames:
+              - ExampleUrlcateory
+            Feeds:
+              - Example-IntelligentFeed
+          Applications:
+            - any
+        - RuleListType: LocalRule
+          RuleName: ExampleRule3
+          Description: Example Security Rule 13 description update
+          Action: DenyResetServer
+          Protocol: application-default
+          Priority: 8
+          Source:
+            Cidrs:
+              - 192.168.1.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-TorExitIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+          Destination:
+            Cidrs:
+              - 192.168.2.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-BulletproofIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+              - PaloAltoNetworks-TorExitIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+            FqdnLists:
+              - Example-FQDN-name
+          Category:
+            URLCategoryNames:
+              - ExampleUrlcateory
+            Feeds:
+              - Example-IntelligentFeed
+          Applications:
+            - any
+  RuleStackResource2:
+    Type: 'PaloAltoNetworks::CloudNGFW::RuleStack'
+    Properties:
+      RuleStackName: Example NGFWRuleStack2
+      ProgrammaticAccessToken: !Ref RSProgrammaticAccessToken
+      RuleStack:
+        Scope: Local
+        MinAppIdVersion: 8509-7158
+        Description: Example  RuleStack2 description 2
+        Deploy: 'YES'
+      SecurityObjects:
+        FqdnList:
+          Name: Example-FQDN-name
+          FqdnList:
+            - 30.1.1.0
+            - 30.1.2.0
+          AuditComment: Example audit commment
+          Description: Example FQDN description 2
+        PrefixList:
+          Name: Example-prefix-name
+          PrefixList:
+            - 30.1.1.0/24
+            - 30.1.2.0/24
+          AuditComment: Example audit commment
+          Description: Example Prefix description 2
+        CustomUrlCategory:
+          URLTargets:
+            - www.test.com
+            - www.tets1.com
+            - www.tets2.com
+          Name: ExampleUrlcateory
+          Description: Example CustomUrlCategory description 2
+          Action: allow
+          AuditComment: Example audit commment
+        CertificateObject:
+          Name: Example-certificate-object
+          Description: Certificate Object description 2
+          CertificateSignerArn: arnExampleSignarn
+          CertificateSelfSigned: false
+          AuditComment: Example certificate audit comment
+        IntelligentFeed:
+          Name: Example-IntelligentFeed
+          Description: Example Intelligent feed Desc 2
+          FeedURL: 'https://www.test123.com'
+          Type: URL_LIST
+          Frequency: DAILY
+          Time: 3
+          AuditComment: Example audit commment
+      RuleList:
+        - RuleListType: LocalRule
+          RuleName: ExampleRule1
+          Description: Example Security Rule 21 description update
+          Action: DenyResetServer
+          Protocol: application-default
+          Priority: 5
+          Source:
+            Cidrs:
+              - 192.168.1.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-TorExitIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+          Destination:
+            Cidrs:
+              - 192.168.2.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-BulletproofIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+              - PaloAltoNetworks-TorExitIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+            FqdnLists:
+              - Example-FQDN-name
+          Category:
+            URLCategoryNames:
+              - ExampleUrlcateory
+            Feeds:
+              - Example-IntelligentFeed
+          Applications:
+            - any
+        - RuleListType: LocalRule
+          RuleName: ExampleRule2
+          Description: Example Security Rule 22 description update
+          Action: DenyResetServer
+          Protocol: application-default
+          Priority: 9
+          Source:
+            Cidrs:
+              - 192.168.1.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-TorExitIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+          Destination:
+            Cidrs:
+              - 192.168.2.0/24
+            Countries: []
+            Feeds:
+              - PaloAltoNetworks-BulletproofIPAddresses
+              - PaloAltoNetworks-HighRiskIPAddresses
+              - PaloAltoNetworks-TorExitIPAddresses
+            PrefixLists:
+              - Example-prefix-name
+            FqdnLists:
+              - Example-FQDN-name
+          Category:
+            URLCategoryNames:
+              - ExampleUrlcateory
+            Feeds:
+              - Example-IntelligentFeed
+          Applications:
+            - any
+  FirewallResource1:
+    DependsOn: RuleStackResource1
+    Type: 'PaloAltoNetworks::CloudNGFW::NGFW'
+    Properties:
+      Description: Test Firewall1 with Associate
+      EndpointMode: CustomerManaged
+      AutomaticUpgradeAppIdVersion:  True
+      FirewallName: Example NGFW1
+      RuleStackName: Example NGFWRuleStack1
+      SubnetMappings:
+        - eu-north-1a
+        - eu-north-1c
+      VpcId: vpc-03c09bdc2dd1cf996
+      LogDestinationConfigs:
+        - LogType: TRAFFIC
+          LogDestinationType: S3
+          LogDestination: testloggroupnew
+        - LogType: THREAT
+          LogDestinationType: CloudWatchLogs
+          LogDestination: testthreatnew
+        - LogType: DECRYPTION
+          LogDestinationType: KinesisDataFirehose
+          LogDestination: teskinessisnew
+      ProgrammaticAccessToken: !Ref FWProgrammaticAccessToken
+  FirewallResource2:
+    DependsOn: RuleStackResource2
+    Type: 'PaloAltoNetworks::CloudNGFW::NGFW'
+    Properties:
+      Description: Test Firewall2 with Associate
+      EndpointMode: CustomerManaged
+      AutomaticUpgradeAppIdVersion:  True
+      FirewallName: Example NGFW2
+      RuleStackName: Example NGFWRuleStack2
+      SubnetMappings:
+        - eu-north-1a
+        - eu-north-1c
+      VpcId: vpc-03c09bdc2dd1cf996
+      LogDestinationConfigs:
+        - LogType: TRAFFIC
+          LogDestinationType: S3
+          LogDestination: testloggroupnew
+        - LogType: THREAT
+          LogDestinationType: CloudWatchLogs
+          LogDestination: testthreatnew
+        - LogType: DECRYPTION
+          LogDestinationType: KinesisDataFirehose
+          LogDestination: teskinessisnew
+      ProgrammaticAccessToken: !Ref FWProgrammaticAccessToken
+  FirewallResource3:
+    Type: 'PaloAltoNetworks::CloudNGFW::NGFW'
+    Properties:
+      Description: Test Firewall 3 with Associate
+      EndpointMode: CustomerManaged
+      AutomaticUpgradeAppIdVersion:  True
+      FirewallName: Example NGFW3
+      RuleStackName: testngfwRS1
+      SubnetMappings:
+        - eu-north-1a
+        - eu-north-1c
+      VpcId: vpc-03c09bdc2dd1cf996
+      LogDestinationConfigs:
+        - LogType: TRAFFIC
+          LogDestinationType: S3
+          LogDestination: testloggroupnew
+        - LogType: THREAT
+          LogDestinationType: CloudWatchLogs
+          LogDestination: testthreatnew
+        - LogType: DECRYPTION
+          LogDestinationType: KinesisDataFirehose
+          LogDestination: teskinessisnew
+      ProgrammaticAccessToken: !Ref FWProgrammaticAccessToken
